@@ -1,9 +1,13 @@
 from random import *
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
+
+templates = Jinja2Templates(directory="templates")
 
 
 origins = [
@@ -52,18 +56,19 @@ bucket = {
 
 ##################### routes #########################
 
-@app.get("/")
-async def root():
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
     files = get_file_urls()
 
     slug = get_slug()
-    return {"message": f"Hello World, {slug}"}
+    return templates.TemplateResponse("index.html", {"request": request, "slug": slug})
+    # return {"message": f"Hello World, {slug}"}
 
 @app.get("/bubbles/{slug}")
 async def slug_content(slug):
     return bucket[slug]
         
-@app.get("/about")
+@app.get("/about", response_class=HTMLResponse)
 async def about():
     return {"message": "Chew is the quick and ephemeral storage you never knew you needed."}
 
