@@ -1,8 +1,24 @@
 <html>
 <head>
-    <title>Chew temporary cloud</title>
+    <title>Chew cloud storage</title>
 </head>
 <body>
-	<h1>your slug is {{ slug }}</h1>
+<br/>
+<h1>Chew</h1>
+<h3>Temporary cloud storage for files</h3>
+
+
+
+{% block content %}
+  <div class="container">
+    <div class="row my-5">
+      <h3 class="text-center display-4">Upload your files</h3>
+      <form method="POST" action="http://localhost:8000/upload/">
+	  <input type="file" id="myFile" name="myFile">
+	  <input type="submit">
+      </form>
+    </div>
+  </div>
+  {% endblock %}
 </body>
 </html>

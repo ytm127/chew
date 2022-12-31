@@ -62,9 +62,8 @@ async def root(request: Request):
 
     slug = get_slug()
     return templates.TemplateResponse("index.html", {"request": request, "slug": slug})
-    # return {"message": f"Hello World, {slug}"}
 
-@app.get("/bubbles/{slug}")
+@app.get("/bucket/{slug}")
 async def slug_content(slug):
     return bucket[slug]
         
@@ -72,4 +71,10 @@ async def slug_content(slug):
 async def about():
     return {"message": "Chew is the quick and ephemeral storage you never knew you needed."}
 
-
+@app.post("/upload/")
+async def upload(request: Request):
+    files = get_file_urls()
+    slug = get_slug()
+    print("inside upload function")
+    return "okay now i need to actually take the File request, not this Request request, and upload it to Linode."
+    # return templates.TemplateResponse("uploaded.html", {"request": request, "slug": slug})
